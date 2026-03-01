@@ -152,8 +152,8 @@
         <div class="divide-y divide-[#eeeef4]">
           {#each primaryShades as s}
             <div class="flex items-center gap-4 px-4 py-2 bg-white hover:bg-[#f6f6fa] transition-colors">
-              <div class="w-8 h-8 rounded-md flex-shrink-0 border border-[#d9d9e8]" style="background:{s.hex}"></div>
-              <code class="text-xs text-[#585872] w-24 flex-shrink-0">primary-{s.shade}</code>
+              <div class="w-8 h-8 rounded-md shrink-0 border border-[#d9d9e8]" style="background:{s.hex}"></div>
+              <code class="text-xs text-[#585872] w-24 shrink-0">primary-{s.shade}</code>
               <code class="text-xs text-[#9090b2] font-mono">{s.hex}</code>
               <div class="ml-auto flex gap-1">
                 <code class="text-[10px] bg-[#eeeef4] text-[#585872] px-1.5 py-0.5 rounded">bg-primary-{s.shade}</code>
@@ -180,7 +180,7 @@
             class="flex items-start gap-3 rounded-lg px-4 py-3 border-l-4 text-sm"
             style="background:{alert.bg}; border-color:{alert.hex}"
           >
-            <span class="font-semibold mt-0.5 flex-shrink-0" style="color:{alert.hex}">{alert.label}</span>
+            <span class="font-semibold mt-0.5 shrink-0" style="color:{alert.hex}">{alert.label}</span>
             <span class="text-[#46465c]">{alert.msg}</span>
           </div>
         {/each}
