@@ -1,33 +1,10 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { login, isAuthenticated } from '$lib/auth';
-	import { onMount } from 'svelte';
+	import { enhance } from '$app/forms';
+	import type { ActionData } from './$types';
 
-	let email = $state('');
-	let password = $state('');
-	let error = $state('');
+	let { form }: { form: ActionData } = $props();
+
 	let loading = $state(false);
-
-	onMount(() => {
-		if (isAuthenticated()) {
-			goto('/admin/dashboard');
-		}
-	});
-
-	async function handleSubmit(e: Event) {
-		e.preventDefault();
-		loading = true;
-		error = '';
-
-		try {
-			await login(email, password);
-			goto('/admin/dashboard');
-		} catch (err: unknown) {
-			error = err instanceof Error ? err.message : 'Erro ao realizar login';
-		} finally {
-			loading = false;
-		}
-	}
 </script>
 
 <div class="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -35,13 +12,24 @@
 		<h1 class="text-2xl font-semibold text-gray-900 mb-1">Entrar</h1>
 		<p class="text-sm text-gray-500 mb-6">Acesse sua conta para continuar</p>
 
-		<form onsubmit={handleSubmit} class="space-y-4">
+		<form
+			method="POST"
+			class="space-y-4"
+			use:enhance={() => {
+				loading = true;
+				return async ({ update }) => {
+					loading = false;
+					await update();
+				};
+			}}
+		>
 			<div>
 				<label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
 				<input
 					id="email"
+					name="email"
 					type="email"
-					bind:value={email}
+					value={form?.email ?? ''}
 					required
 					autocomplete="email"
 					placeholder="seu@email.com"
@@ -53,8 +41,8 @@
 				<label for="password" class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
 				<input
 					id="password"
+					name="password"
 					type="password"
-					bind:value={password}
 					required
 					autocomplete="current-password"
 					placeholder="••••••••"
@@ -62,9 +50,9 @@
 				/>
 			</div>
 
-			{#if error}
+			{#if form?.error}
 				<p class="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
-					{error}
+					{form.error}
 				</p>
 			{/if}
 
