@@ -49,7 +49,7 @@
 	</aside>
 
 	<div class="flex-1 flex flex-col min-w-0">
-		<header class="bg-surface-50 dark:bg-surface-900 border-b border-surface-200 dark:border-surface-800 px-6 py-4 flex items-center justify-between">
+		<header class="bg-surface-50 dark:bg-surface-900 border-b border-surface-200 dark:border-surface-800 px-6 py-5 flex items-center justify-between">
 			<h1 class="text-lg font-semibold text-surface-950 dark:text-surface-50">
 				{navItems.find((i) => i.href === currentPath)?.label ?? 'Admin'}
 			</h1>
